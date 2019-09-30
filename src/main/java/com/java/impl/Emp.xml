@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--类名路径-->
+<mapper namespace="com.java.impl.Emp">
+       <!--查询所有-->
+       <select id="selectAll" resultType="Map">
+           select * from emp
+       </select>
+
+       <!--带条件查询-->
+    <select id="getById" parameterType="Map" resultType="Map">
+        SELECT * FROM emp WHERE ename=#{ename} AND job=#{job}
+    </select>
+
+       <!--添加数据-->
+    <insert id="getinsert" parameterType="Map">
+        INSERT emp(empno,ename,job,mgr,hiredate,sal,COMM,deptno)VALUES(#{empno},#{ename},#{job},#{mgr},#{hiredate},#{sal},#{COMM},#{deptno})
+    </insert>
+
+    <!--删除-->
+    <delete id="getdelect" parameterType="Map">
+           DELETE FROM emp WHERE empno=#{empno}
+    </delete>
+
+    <!--模糊查询-->
+    <select id="selectAlll" parameterType="Map" resultType="Map">
+        SELECT * FROM emp
+       <where>
+           <if test="empno!=null and empno!=''">
+               AND empno=#{empno}
+           </if>
+           <if test="ename!=null and ename!=''">
+               AND ename=#{ename}
+           </if>
+           <if test="job!=null and job!=''">
+               AND  job=#{job}
+           </if>
+           <if test="mgr!=null and mgr!=''">
+               AND  mgr=#{mgr}
+           </if>
+           <if test="hiredate!=null and hiredate!=''">
+               AND  hiredate=#{hiredate}
+           </if>
+           <if test="sal!=null and sal!=''">
+               AND sal=#{sal}
+           </if>
+           <if test="COMM!=null and COMM!=''">
+               AND COMM=#{COMM}
+           </if>
+           <if test="deptno!=null and deptno!=''">
+               AND deptno=#{deptno}
+           </if>
+       </where>
+    </select>
+
+    <!--动态修改-->
+    <update id="getupdate" parameterType="Map">
+        UPDATE emp
+        <set>
+            <if test="ename!=null and ename!=''">
+                 ename=#{ename},
+            </if>
+            <if test="job!=null and job!=''">
+                  job=#{job},
+            </if>
+            <if test="mgr!=null and mgr!=''">
+                  mgr=#{mgr},
+            </if>
+            <if test="hiredate!=null and hiredate!=''">
+                  hiredate=#{hiredate},
+            </if>
+            <if test="sal!=null and sal!=''">
+                 sal=#{sal},
+            </if>
+            <if test="COMM!=null and COMM!=''">
+                 COMM=#{COMM},
+            </if>
+            <if test="deptno!=null and deptno!=''">
+                 deptno=#{deptno},
+            </if>
+               empno=#{empno}
+        </set>
+          where empno=#{empno}
+    </update>
+</mapper>
